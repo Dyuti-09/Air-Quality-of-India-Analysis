@@ -1,0 +1,10 @@
+Files are available in CSV format:
+
+PRIMARY FOLDER:
+Air Quality India Data
+
+SUB FOLDERS:     FILES:
+City             city_day ; city_hour
+Station          station_day ; station_hour ; station
+
+Source : https://www.kaggle.com/code/pratik1120/air-quality-data-in-india-2015-2020
