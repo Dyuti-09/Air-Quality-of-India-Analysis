@@ -1,0 +1,60 @@
+Data is loaded in the broze layer(raw_data) using bulk insert:
+
+QUERIES:
+------------------------------------------------------------------------------------------------------------------------------------------------
+PRINT 'INSERTING DATA INTO city_hour TABLE';
+
+		BULK INSERT raw_data.city_hour --Bulk insert in Bronze Layer
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\City\city_hour.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK
+		);
+-------------------------------------------------------------------------------------------------------------------------------------------------
+PRINT 'INSERTING DATA INTO city_day TABLE';
+
+		BULK INSERT raw_data.city_day --Bulk insert in Bronze Layer
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\City\city_day.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK
+		);
+		SELECT * FROM raw_data.city_day;
+-------------------------------------------------------------------------------------------------------------------------------------------------
+PRINT 'INSERTING DATA INTO station_day TABLE';
+
+		BULK INSERT raw_data.station_day --Bulk insert in Bronze Layer
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\Station\station_day.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK
+		);
+-------------------------------------------------------------------------------------------------------------------------------------------------
+PRINT 'INSERTING DATA INTO station_hour TABLE';
+
+		BULK INSERT raw_data.station_hour --Bulk insert in Bronze Layer
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\Station\station_hour.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK
+		);
+--------------------------------------------------------------------------------------------------------------------------------------------------
+PRINT 'INSERTING DATA INTO station TABLE';
+
+		BULK INSERT raw_data.station --BULK INSER IN BROZE LAYER
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\Station\stations.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK
+		);
+---------------------------------------------------------------------------------------------------------------------------------------------------
