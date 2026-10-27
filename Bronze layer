@@ -1,0 +1,94 @@
+ETL PROCESS:
+--Removal of duplicates
+--Data Standardization
+--Handling missing data(Null values)
+--Data enrichment
+-------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------
+SELECT 
+TRIM(City) AS City,
+CONVERT(date,Date_,103) AS Date_, -- Data Standardization : Converting Dates from text to date format
+ISNULL(PM2_5,0) AS PM2_5,           
+ISNULL(PM10,0) AS PM10,			-- Data enrichment : replacing nulls with zero
+ISNULL(NO2,0) AS NO2,
+ISNULL(NH3,0) AS NH3,
+ISNULL(CO,0) AS CO,
+ISNULL(SO2,0) AS SO2,
+ISNULL(O3,0) AS O3,
+ISNULL(Benzene,0) AS Benzene,
+ISNULL(Toluene,0) AS Toluene,
+ISNULL(Xylene,0) AS Xylene,
+ISNULL(AQI,0) AS AQI,
+TRIM(ISNULL(AQI_Bucket,'Data Missing')) AS AQI_Bucket -- Data enrichment : replacing nulls with understandable terms.
+FROM raw_data.city_day;
+
+select AQI_Bucket, count(*) As num -- finding null column 
+FROM raw_data.station_day
+where AQI_Bucket is null
+group by AQI_Bucket;
+
+
+SELECT 
+TRIM(StationID) As StationID,
+CONVERT(date,Date_,103) AS Date_, -- Data Standardization : Converting Dates from text to date format
+ISNULL(PM2_5,0) AS PM2_5,           
+ISNULL(PM10,0) AS PM10,			-- Data enrichment : replacing nulls with zero
+ISNULL(NO2,0) AS NO2,
+ISNULL(NH3,0) AS NH3,
+ISNULL(CO,0) AS CO,
+ISNULL(SO2,0) AS SO2,
+ISNULL(O3,0) AS O3,
+ISNULL(Benzene,0) AS Benzene,
+ISNULL(Toluene,0) AS Toluene,
+ISNULL(Xylene,0) AS Xylene,
+ISNULL(AQI,0) AS AQI,
+TRIM(ISNULL(AQI_Bucket,'Data Missing')) AS AQI_Bucket -- Data enrichment : replacing nulls with understandable terms.
+FROM raw_data.station_day;
+
+SELECT 
+TRIM(StationID) AS StationID,
+Convert(varchar(19),CONVERT(datetime,Datetime_,103),120) AS Datetime_, -- Data Standardization : Converting Dates from text to datetime format
+ISNULL(PM2_5,0) AS PM2_5,           
+ISNULL(PM10,0) AS PM10,			-- Data enrichment : replacing nulls with zero
+ISNULL(NO2,0) AS NO2,
+ISNULL(NH3,0) AS NH3,
+ISNULL(CO,0) AS CO,
+ISNULL(SO2,0) AS SO2,
+ISNULL(O3,0) AS O3,
+ISNULL(Benzene,0) AS Benzene,
+ISNULL(Toluene,0) AS Toluene,
+ISNULL(Xylene,0) AS Xylene,
+ISNULL(AQI,0) AS AQI,
+Trim(ISNULL(AQI_Bucket,'Data Missing')) AS AQI_Bucket -- Data enrichment : replacing nulls with understandable terms.
+FROM raw_data.station_hour;
+
+SELECT 
+TRIM(City) AS City,
+Convert (varchar(19),CONVERT(datetime,Date_time,103),120) AS Datetime_, -- Data Standardization : Converting Dates from text to datetime format
+ISNULL(PM2_5,0) AS PM2_5,           
+ISNULL(PM10,0) AS PM10,			-- Data enrichment : replacing nulls with zero
+ISNULL(NO2,0) AS NO2,
+ISNULL(NH3,0) AS NH3,
+ISNULL(CO,0) AS CO,
+ISNULL(SO2,0) AS SO2,
+ISNULL(O3,0) AS O3,
+ISNULL(Benzene,0) AS Benzene,
+ISNULL(Toluene,0) AS Toluene,
+ISNULL(Xylene,0) AS Xylene,
+ISNULL(AQI,0) AS AQI,
+TRIM(ISNULL(AQI_Bucket,'Data Missing')) AS AQI_Bucket -- Data enrichment : replacing nulls with understandable terms.
+FROM raw_data.city_hour;
+
+
+SELECT 
+Date_time, -- Validating null values
+Count(*)
+FROM raw_data.city_hour
+where Date_time is null 
+GROUP BY Date_time;
+
+SELECT 
+StationID , count(*)
+FROM raw_data.station_hour 
+WHERE StationID LIKE 'D%'
+group by StationID;
