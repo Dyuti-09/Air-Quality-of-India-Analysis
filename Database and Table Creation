@@ -1,0 +1,122 @@
+CREATED DATABASE:
+
+CREATE DATABASE Air_quality;
+
+DATA ARCHITECTURE: Madellian Structure  (Bronze, Silver, Gold)
+
+CREATE SCHEMA raw_data; (broze)
+GO
+CREATE SCHEMA data_cleaning; (silver)
+GO
+CREATE SCHEMA clean_data; (gold)
+-----------------------------------------------------------------------------------------------
+City_hour bronze table
+-----------------------------------------------------------------------------------------------
+IF OBJECT_ID('raw_data.city_hour','U') IS NOT NULL
+DROP TABLE raw_data.city_hour;
+
+CREATE TABLE raw_data.city_hour
+(
+City Varchar(50),
+Date_time Varchar(50),
+PM2_5 decimal(10,2),
+PM10 decimal(10,2),
+NO_ decimal(10,2),
+NO2 decimal(10,2),
+NOx decimal(10,2),
+NH3 decimal(10,2),
+CO decimal(10,2),
+SO2 decimal(10,2),
+O3 decimal(10,2),
+Benzene decimal(10,2),
+Toluene decimal(10,2), 
+Xylene decimal(10,2),
+AQI int,
+AQI_Bucket varchar(50)
+);
+-----------------------------------------------------------------------------------------------
+City_day bronze table
+-----------------------------------------------------------------------------------------------
+IF OBJECT_ID('raw_data.city_day','U') IS NOT NULL
+DROP TABLE raw_data.city_day;
+
+CREATE TABLE raw_data.city_day
+(
+City Varchar(50),
+Date_ Varchar(50),
+PM2_5 decimal(10,2),
+PM10 decimal(10,2),
+NO_ decimal(10,2),
+NO2 decimal(10,2),
+NOx decimal(10,2),
+NH3 decimal(10,2),
+CO decimal(10,2),
+SO2 decimal(10,2),
+O3 decimal(10,2),
+Benzene decimal(10,2),
+Toluene decimal(10,2), 
+Xylene decimal(10,2),
+AQI int,
+AQI_Bucket varchar(50)
+);
+-----------------------------------------------------------------------------------------------
+Station_hour bronze table
+-----------------------------------------------------------------------------------------------
+IF OBJECT_ID('raw_data.station_hour','U') IS NOT NULL
+DROP TABLE raw_data.station_hour;
+
+CREATE TABLE raw_data.station_hour(
+StationID varchar(50),
+Datetime_ Varchar(50),
+PM2_5 decimal(10,2),
+PM10 decimal(10,2),
+NO_ decimal(10,2),
+NO2 decimal(10,2),
+NOx decimal(10,2),
+NH3 decimal(10,2),
+CO decimal(10,2),
+SO2 decimal(10,2),
+O3 decimal(10,2),
+Benzene decimal(10,2),
+Toluene decimal(10,2),
+Xylene decimal(10,2),
+AQI int,
+AQI_Bucket varchar(50)
+);
+-----------------------------------------------------------------------------------------------
+Station_day bronze table
+-----------------------------------------------------------------------------------------------
+IF OBJECT_ID('raw_data.station_day','U') IS NOT NULL
+DROP TABLE raw_data.station_day;
+
+CREATE TABLE raw_data.station_day(
+StationID varchar(50),
+Date_ Varchar(50),
+PM2_5 decimal(10,2),
+PM10 decimal(10,2),
+NO_ decimal(10,2),
+NO2 decimal(10,2),
+NOx decimal(10,2),
+NH3 decimal(10,2),
+CO decimal(10,2),
+SO2 decimal(10,2),
+O3 decimal(10,2),
+Benzene decimal(10,2),
+Toluene decimal(10,2),
+Xylene decimal(10,2),
+AQI int,
+AQI_Bucket varchar(50)
+);
+-----------------------------------------------------------------------------------------------
+Station bronze table
+-----------------------------------------------------------------------------------------------
+IF OBJECT_ID('raw_data.station','U') IS NOT NULL
+DROP TABLE raw_data.station;
+
+CREATE TABLE raw_data.station(
+StationID varchar(50),
+StationName varchar(100),
+City varchar(50),
+State_ varchar(50),
+Status_ varchar(50)
+);
