@@ -1,4 +1,4 @@
-ETL PROCESS:
+Data Cleaning:
 --Removal of duplicates
 --Data Standardization
 --Handling missing data(Null values)
