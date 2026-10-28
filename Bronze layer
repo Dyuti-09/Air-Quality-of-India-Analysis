@@ -92,3 +92,67 @@ StationID , count(*)
 FROM raw_data.station_hour 
 WHERE StationID LIKE 'D%'
 group by StationID;
+
+SELECT 
+Date_time, -- Validating null values
+Count(*)
+FROM raw_data.city_hour
+where Date_time is null 
+GROUP BY Date_time;
+
+SELECT 
+StationID , count(*)
+FROM raw_data.station_hour 
+WHERE StationID LIKE 'D%'
+group by StationID;
+
+SELECT 
+StationName, count(StationName) FROM raw_data.station
+group by StationName
+HAVING COUNT(StationName) > 1;
+
+
+SELECT 
+StationName,StationID,State_,Status_ FROM raw_data.station -- granular search for discrepant data
+WHERE
+StationName LIKE '"Anand Vihar'
+OR
+StationName LIKE '"Collectorate'
+OR
+StationName = '"Nehru Nagar'
+OR
+StationName = '"Pusa'
+OR
+StationName = '"GIDC'
+OR 
+StationName LIKE '"Shatri Nagar'
+
+ORDER BY StationName, StationID
+;
+Use Air_Quality;
+
+WITH duplicate_cte AS  -- finding duplicates
+(
+SELECT
+StationID,StationName,State_,Status_,
+ROW_NUMBER () Over(
+PARTITION BY StationName ORDER BY StationID) as row_num
+FROM raw_data.station
+)
+DELETE  FROM duplicate_cte -- Removed duplicates
+WHERE row_num > 1;
+
+SELECT
+TRIM(StationID) AS StationID,
+TRIM(TRIM(LEADING '"' FROM StationName)) AS StationName, -- Data Cleaning removing special character
+TRIM(State_) AS City,
+LEFT(TRIM(TRAILING ',' FROM Status_),CHARINDEX(',',Status_)-1) AS State_, -- Data enrichment (splitting state from status)
+CASE 
+WHEN 
+TRIM(TRAILING ',' FROM Status_) LIKE '%Active%' THEN 'Active' --Data enrichment creating status column
+WHEN
+TRIM(TRAILING ',' FROM Status_) LIKE '%Inactive%' THEN 'Inactive'
+ELSE 'NA'
+END AS Status_
+FROM raw_data.station
+;
