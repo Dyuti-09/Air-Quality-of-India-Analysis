@@ -1,7 +1,9 @@
 We have carried out the data cleaning process in this layer and loaded the data into the silver layer:
 
 Here is a summarry :
-
+===============================================
+LOADING SILVER LAYER
+===============================================
 >> TRUNCATING TABLE: data_cleaning.city_day
 >> INSERTING DATA INTO: data_cleaning.city_day
 
