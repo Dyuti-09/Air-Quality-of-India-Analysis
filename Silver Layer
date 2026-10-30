@@ -1,0 +1,205 @@
+We have carried out the data cleaning process in this layer and loaded the data into the silver layer:
+
+Here is a summarry :
+
+>> TRUNCATING TABLE: data_cleaning.city_day
+>> INSERTING DATA INTO: data_cleaning.city_day
+
+(29531 rows affected)
+>> TRUNCATING TABLE: data_cleaning.station_day
+>> INSERTING DATA INTO: data_cleaning.station_day
+
+(108035 rows affected)
+>> TRUNCATING TABLE: data_cleaning.station_hour
+>> INSERTING DATA INTO: data_cleaning.station_hour
+
+(1048575 rows affected)
+>> TRUNCATING TABLE: data_cleaning.city_hour
+>> INSERTING DATA INTO: data_cleaning.city_hour
+
+(707875 rows affected)
+>> TRUNCATING TABLE: data_cleaning.station
+>> INSERTING DATA INTO: data_cleaning.station
+
+(224 rows affected)
+
+Completion time: 2026-10-30T12:01:03.6371394+05:30
+
+EXEC data_cleaning.load_data_cleaning
+
+CREATE OR ALTER PROCEDURE data_cleaning.LOAD_data_cleaning
+AS
+BEGIN
+
+	PRINT '>> TRUNCATING TABLE: data_cleaning.city_day';
+	TRUNCATE TABLE data_cleaning.city_day;
+	PRINT '>> INSERTING DATA INTO: data_cleaning.city_day';
+	INSERT INTO data_cleaning.city_day(
+	City,
+	Date_,
+	PM2_5,
+	PM10,
+	NO2,
+	NH3,
+	CO,
+	SO2,
+	O3,
+	Benzene,
+	Toluene, 
+	Xylene,
+	AQI,
+	AQI_Bucket
+	)
+	SELECT 
+	TRIM(City) AS City,
+	CONVERT(date,Date_,103) AS Date_, -- Data Standardization : Converting Dates from text to date format
+	ISNULL(PM2_5,0) AS PM2_5,           
+	ISNULL(PM10,0) AS PM10,			-- Data enrichment : replacing nulls with zero
+	ISNULL(NO2,0) AS NO2,
+	ISNULL(NH3,0) AS NH3,
+	ISNULL(CO,0) AS CO,
+	ISNULL(SO2,0) AS SO2,
+	ISNULL(O3,0) AS O3,
+	ISNULL(Benzene,0) AS Benzene,
+	ISNULL(Toluene,0) AS Toluene,
+	ISNULL(Xylene,0) AS Xylene,
+	ISNULL(AQI,0) AS AQI,
+	TRIM(ISNULL(AQI_Bucket,'Data Missing')) AS AQI_Bucket -- Data enrichment : replacing nulls with understandable terms.
+	FROM raw_data.city_day;
+
+	PRINT '>> TRUNCATING TABLE: data_cleaning.station_day';
+	TRUNCATE TABLE data_cleaning.station_day;
+	PRINT '>> INSERTING DATA INTO: data_cleaning.station_day';
+	INSERT INTO data_cleaning.station_day(
+	StationID,
+	Date_,
+	PM2_5,
+	PM10,
+	NO2,
+	NH3,
+	CO,
+	SO2,
+	O3,
+	Benzene,
+	Toluene,
+	Xylene,
+	AQI,
+	AQI_Bucket
+	)
+	SELECT 
+	TRIM(StationID) As StationID,
+	CONVERT(date,Date_,103) AS Date_, -- Data Standardization : Converting Dates from text to date format
+	ISNULL(PM2_5,0) AS PM2_5,           
+	ISNULL(PM10,0) AS PM10,			-- Data enrichment : replacing nulls with zero
+	ISNULL(NO2,0) AS NO2,
+	ISNULL(NH3,0) AS NH3,
+	ISNULL(CO,0) AS CO,
+	ISNULL(SO2,0) AS SO2,
+	ISNULL(O3,0) AS O3,
+	ISNULL(Benzene,0) AS Benzene,
+	ISNULL(Toluene,0) AS Toluene,
+	ISNULL(Xylene,0) AS Xylene,
+	ISNULL(AQI,0) AS AQI,
+	TRIM(ISNULL(AQI_Bucket,'Data Missing')) AS AQI_Bucket -- Data enrichment : replacing nulls with understandable terms.
+	FROM raw_data.station_day;
+
+	PRINT '>> TRUNCATING TABLE: data_cleaning.station_hour';
+	TRUNCATE TABLE data_cleaning.station_hour;
+	PRINT '>> INSERTING DATA INTO: data_cleaning.station_hour';
+	INSERT INTO data_cleaning.station_hour(
+	StationID,
+	Datetime_,
+	PM2_5,
+	PM10,
+	NO2,
+	NH3,
+	CO,
+	SO2,
+	O3,
+	Benzene,
+	Toluene,
+	Xylene,
+	AQI,
+	AQI_Bucket
+	)
+	SELECT 
+	TRIM(StationID) AS StationID,
+	Convert(varchar(19),CONVERT(datetime,Datetime_,103),120) AS Datetime_, -- Data Standardization : Converting Dates from text to datetime format
+	ISNULL(PM2_5,0) AS PM2_5,           
+	ISNULL(PM10,0) AS PM10,			-- Data enrichment : replacing nulls with zero
+	ISNULL(NO2,0) AS NO2,
+	ISNULL(NH3,0) AS NH3,
+	ISNULL(CO,0) AS CO,
+	ISNULL(SO2,0) AS SO2,
+	ISNULL(O3,0) AS O3,
+	ISNULL(Benzene,0) AS Benzene,
+	ISNULL(Toluene,0) AS Toluene,
+	ISNULL(Xylene,0) AS Xylene,
+	ISNULL(AQI,0) AS AQI,
+	Trim(ISNULL(AQI_Bucket,'Data Missing')) AS AQI_Bucket -- Data enrichment : replacing nulls with understandable terms.
+	FROM raw_data.station_hour;
+
+	PRINT '>> TRUNCATING TABLE: data_cleaning.city_hour';
+	TRUNCATE TABLE data_cleaning.city_hour;
+	PRINT '>> INSERTING DATA INTO: data_cleaning.city_hour';
+	INSERT INTO data_cleaning.city_hour(
+	City,
+	Date_time,
+	PM2_5,
+	PM10,
+	NO2,
+	NH3,
+	CO,
+	SO2,
+	O3,
+	Benzene,
+	Toluene, 
+	Xylene,
+	AQI,
+	AQI_Bucket
+	)
+	SELECT 
+	TRIM(City) AS City,
+	Convert (varchar(19),CONVERT(datetime,Date_time,103),120) AS Datetime_, -- Data Standardization : Converting Dates from text to datetime format
+	ISNULL(PM2_5,0) AS PM2_5,           
+	ISNULL(PM10,0) AS PM10,			-- Data enrichment : replacing nulls with zero
+	ISNULL(NO2,0) AS NO2,
+	ISNULL(NH3,0) AS NH3,
+	ISNULL(CO,0) AS CO,
+	ISNULL(SO2,0) AS SO2,
+	ISNULL(O3,0) AS O3,
+	ISNULL(Benzene,0) AS Benzene,
+	ISNULL(Toluene,0) AS Toluene,
+	ISNULL(Xylene,0) AS Xylene,
+	ISNULL(AQI,0) AS AQI,
+	TRIM(ISNULL(AQI_Bucket,'Data Missing')) AS AQI_Bucket -- Data enrichment : replacing nulls with understandable terms.
+	FROM raw_data.city_hour;
+
+	PRINT '>> TRUNCATING TABLE: data_cleaning.station';
+	TRUNCATE TABLE data_cleaning.station;
+	PRINT '>> INSERTING DATA INTO: data_cleaning.station';
+	INSERT INTO data_cleaning.station
+	(StationID,
+	StationName,
+	City,
+	State_,
+	Status_
+	)
+	SELECT
+	TRIM(StationID) AS StationID,
+	TRIM(TRIM(LEADING '"' FROM StationName)) AS StationName, -- Data Cleaning removing special character
+	TRIM(State_) AS City,
+	LEFT(TRIM(TRAILING ',' FROM Status_),CHARINDEX(',',Status_)-1) AS State_, -- Data enrichment (splitting state from status)
+	CASE 
+	WHEN 
+	TRIM(TRAILING ',' FROM Status_) LIKE '%Active%' THEN 'Active' --Data enrichment creating status column
+	WHEN
+	TRIM(TRAILING ',' FROM Status_) LIKE '%Inactive%' THEN 'Inactive'
+	ELSE 'NA'
+	END AS Status_
+	FROM raw_data.station
+	;
+END
+
+
+
