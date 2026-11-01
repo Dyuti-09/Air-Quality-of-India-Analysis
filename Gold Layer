@@ -1,0 +1,98 @@
+This is the final layer of the data architecture, where I have loaded the cleaned and organized data. The Gold layer specifies the fact and the dimension tables for the data modeling.
+I have followed snake format of naming convention for naming the tables and the columns.
+---------------------------------------------
+FACT TABLE: fact_station_day
+---------------------------------------------
+
+CREATE VIEW clean_data.fact_station_day AS
+
+SELECT 
+StationID As station_id,
+Date_ AS record_date,
+PM2_5 AS pm2_5,
+PM10 AS pm_10,
+NO2 AS no_2,
+NH3 AS nh_3,
+CO AS co,
+SO2 AS so_2,
+O3 AS o_3,
+Benzene AS benzene,
+Toluene AS toluene,
+Xylene AS xylene,
+AQI AS aqi,
+AQI_Bucket AS aqi_bucket
+FROM data_cleaning.station_day;
+
+---------------------------------------------
+FACT TABLE: fact_station_hour
+---------------------------------------------
+CREATE VIEW clean_data.fact_station_hour AS
+SELECT 
+StationID As station_id,
+Datetime_ AS record_time,
+PM2_5 AS pm2_5,
+PM10 AS pm_10,
+NO2 AS no_2,
+NH3 AS nh_3,
+CO AS co,
+SO2 AS so_2,
+O3 AS o_3,
+Benzene AS benzene,
+Toluene AS toluene,
+Xylene AS xylene,
+AQI AS aqi,
+AQI_Bucket AS aqi_bucket
+FROM data_cleaning.station_hour;
+
+---------------------------------------------
+FACT TABLE: fact_city_day
+---------------------------------------------
+
+CREATE VIEW clean_data.fact_city_day AS
+SELECT 
+City As city_name,
+Date_ AS record_date,
+PM2_5 AS pm2_5,
+PM10 AS pm_10,
+NO2 AS no_2,
+NH3 AS nh_3,
+CO AS co,
+SO2 AS so_2,
+O3 AS o_3,
+Benzene AS benzene,
+Toluene AS toluene,
+Xylene AS xylene,
+AQI AS aqi,
+AQI_Bucket AS aqi_bucket
+FROM data_cleaning.city_day;
+---------------------------------------------
+FACT TABLE: fact_city_hour
+---------------------------------------------
+CREATE VIEW clean_data.fact_city_hour AS
+SELECT 
+City As city_name,
+Date_time AS record_time,
+PM2_5 AS pm2_5,
+PM10 AS pm_10,
+NO2 AS no_2,
+NH3 AS nh_3,
+CO AS co,
+SO2 AS so_2,
+O3 AS o_3,
+Benzene AS benzene,
+Toluene AS toluene,
+Xylene AS xylene,
+AQI AS aqi,
+AQI_Bucket AS aqi_bucket
+FROM data_cleaning.city_hour;
+---------------------------------------------
+DIM TABLE: dim_station
+---------------------------------------------
+CREATE VIEW clean_data.dim_station AS
+
+SELECT 
+StationID As station_id,
+StationName AS station_name,
+City AS city,
+State_ AS state_name
+FROM data_cleaning.station;
