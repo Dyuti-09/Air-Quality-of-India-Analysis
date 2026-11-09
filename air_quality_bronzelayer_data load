@@ -1,0 +1,80 @@
+Data is loaded in the broze layer using bulk insert:
+
+QUERIES:
+
+CREATE OR ALTER PROCEDURE bronzelayer.load_bronzelayer AS
+
+BEGIN
+        PRINT '===============================================';
+	    PRINT 'LOADING BRONZE LAYER';
+	    PRINT '===============================================';
+		PRINT 'TRUNCATING DATA FROM station_hour TABLE';
+		TRUNCATE TABLE bronzelayer.station_hour;
+		PRINT 'INSERTING DATA INTO station_hour TABLE';
+		BULK INSERT bronzelayer.station_hour --Bulk insert in Bronze Layer
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\Station\station_hour.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK
+		);
+
+        PRINT '===============================================';
+	    PRINT 'LOADING BRONZE LAYER';
+	    PRINT '===============================================';
+		PRINT 'TRUNCATING DATA FROM fact_station_day TABLE';
+		TRUNCATE TABLE bronzelayer.station_day;
+		PRINT 'INSERTING DATA INTO station_day TABLE';
+		BULK INSERT bronzelayer.station_day --Bulk insert in Bronze Layer
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\Station\station_day.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK
+		); 
+		PRINT '===============================================';
+	    PRINT 'LOADING BRONZE LAYER';
+	    PRINT '===============================================';
+		PRINT 'TRUNCATING DATA FROM city_day TABLE';
+		TRUNCATE TABLE bronzelayer.city_day;
+		PRINT 'INSERTING DATA INTO fact_city_day TABLE';
+		BULK INSERT bronzelayer.city_day
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\City\city_day.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK);
+		
+		PRINT '===============================================';
+	    PRINT 'LOADING BRONZE LAYER';
+	    PRINT '===============================================';
+		PRINT 'TRUNCATING DATA FROM city_hour TABLE';
+		TRUNCATE TABLE bronzelayer.city_hour;
+		PRINT 'INSERTING DATA INTO city_hour TABLE';
+		BULK INSERT bronzelayer.city_hour
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\City\city_hour.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK);
+		PRINT '===============================================';
+	    PRINT 'LOADING BRONZE LAYER';
+	    PRINT '===============================================';
+		PRINT 'TRUNCATING DATA FROM station_detail TABLE';
+		TRUNCATE TABLE bronzelayer.station_detail;
+		PRINT 'BULK INSERT DATA INTO bronze_layer.station_detail TABLE'
+		BULK INSERT bronzelayer.station_detail
+		FROM 'C:\Users\Dyuti Mazumder\Downloads\Air Quality India Data\Station\stations.csv'
+		WITH
+		(
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ',',
+		TABLOCK);
+
+END
+
+EXEC bronzelayer.load_bronzelayer;
