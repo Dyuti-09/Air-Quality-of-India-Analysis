@@ -1,98 +1,75 @@
-This is the final layer of the data architecture, where I have loaded the cleaned and organized data. The Gold layer specifies the fact and the dimension tables for the data modeling.
-I have followed snake format of naming convention for naming the tables and the columns.
----------------------------------------------
-FACT TABLE: fact_station_day
----------------------------------------------
 
-CREATE VIEW clean_data.fact_station_day AS
+    FACT TABLE : fact_stations
+    ----------------------------
+    CREATE VIEW goldlayer.fact_stations AS
 
-SELECT 
-StationID As station_id,
-Date_ AS record_date,
-PM2_5 AS pm2_5,
-PM10 AS pm_10,
-NO2 AS no_2,
-NH3 AS nh_3,
-CO AS co,
-SO2 AS so_2,
-O3 AS o_3,
-Benzene AS benzene,
-Toluene AS toluene,
-Xylene AS xylene,
-AQI AS aqi,
-AQI_Bucket AS aqi_bucket
-FROM data_cleaning.station_day;
+    SELECT 
+    sh.stationId,
+    sh.date_,
+    sh.time_,
+    sh.pm2_5,
+    sh.pm_10,
+    sh.no_,
+    sh.no2,
+    sh.nox,
+    sh.nh3,
+    sh.co,
+    sh.so2,
+    sh.o3,
+    sh.benzene,
+    sh.toluene,
+    sh.xylene,
+    sh.aqi,
+    sh.aqi_bucket
+    FROM silverlayer.station_hour sh    -- Combined the station_day and station_hour table into one table containing common date and station_id
+    LEFT JOIN silverlayer.station_day sd
+    ON
+    sh.stationId=sd.stationId
+    AND
+    sh.date_=sd.date_;
 
----------------------------------------------
-FACT TABLE: fact_station_hour
----------------------------------------------
-CREATE VIEW clean_data.fact_station_hour AS
-SELECT 
-StationID As station_id,
-Datetime_ AS record_time,
-PM2_5 AS pm2_5,
-PM10 AS pm_10,
-NO2 AS no_2,
-NH3 AS nh_3,
-CO AS co,
-SO2 AS so_2,
-O3 AS o_3,
-Benzene AS benzene,
-Toluene AS toluene,
-Xylene AS xylene,
-AQI AS aqi,
-AQI_Bucket AS aqi_bucket
-FROM data_cleaning.station_hour;
+    FACT TABLE : fact_cities
+    ------------------------
+    CREATE VIEW goldlayer.fact_cities AS
 
----------------------------------------------
-FACT TABLE: fact_city_day
----------------------------------------------
+    SELECT 
+           ch.city
+          ,ch.record_date
+          ,ch.pm2_5
+          ,ch.pm_10
+          ,ch.no_
+          ,ch.no2
+          ,ch.nox
+          ,ch.nh3
+          ,ch.co
+          ,ch.so2
+          ,ch.o3
+          ,ch.benzene
+          ,ch.toluene
+          ,ch.xylene
+          ,ch.aqi
+          ,ch.aqi_bucket
+      FROM silverlayer.city_hour ch      -- Combined the city_day and city_hour table into one table containing common date and city
+      left join silverlayer.city_day cd
+      on ch.city = cd.city
+      and ch.record_date = cd.record_date;
 
-CREATE VIEW clean_data.fact_city_day AS
-SELECT 
-City As city_name,
-Date_ AS record_date,
-PM2_5 AS pm2_5,
-PM10 AS pm_10,
-NO2 AS no_2,
-NH3 AS nh_3,
-CO AS co,
-SO2 AS so_2,
-O3 AS o_3,
-Benzene AS benzene,
-Toluene AS toluene,
-Xylene AS xylene,
-AQI AS aqi,
-AQI_Bucket AS aqi_bucket
-FROM data_cleaning.city_day;
----------------------------------------------
-FACT TABLE: fact_city_hour
----------------------------------------------
-CREATE VIEW clean_data.fact_city_hour AS
-SELECT 
-City As city_name,
-Date_time AS record_time,
-PM2_5 AS pm2_5,
-PM10 AS pm_10,
-NO2 AS no_2,
-NH3 AS nh_3,
-CO AS co,
-SO2 AS so_2,
-O3 AS o_3,
-Benzene AS benzene,
-Toluene AS toluene,
-Xylene AS xylene,
-AQI AS aqi,
-AQI_Bucket AS aqi_bucket
-FROM data_cleaning.city_hour;
----------------------------------------------
-DIM TABLE: dim_station
----------------------------------------------
-CREATE VIEW clean_data.dim_station AS
+      DIMENSION TABLE : dim_city        -- extracted unique city names to form a seperate dimension table city. This would simplify the data modelling process. 
+      CREATE VIEW goldlayer.dim_city AS
 
-SELECT 
-StationID As station_id,
-StationName AS station_name,
-City AS city,
-State_ AS state_name
-FROM data_cleaning.station;
+      select
+      city,
+      state_
+      from silverlayer.dim_city
+      where city_count = 1;
+
+      DIMENSION TABLE : dim_station  
+      CREATE VIEW goldlayer.dim_station AS
+
+      select * from silverlayer.dim_station; -- extracted unique station_id names to form a seperate dimension table station. This would simplify the data modelling process. 
+  
+   
+  select * from goldlayer.fact_cities;
+  select * from goldlayer.fact_stations;
+  select * from goldlayer.dim_city;
+  select * from goldlayer.dim_station;
