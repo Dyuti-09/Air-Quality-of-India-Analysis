@@ -1,78 +1,28 @@
 CREATED DATABASE:
 
-CREATE DATABASE Air_quality;
+CREATE DATABASE air_quality;
 
 DATA ARCHITECTURE: Madellian Structure  (Bronze, Silver, Gold)
 
-CREATE SCHEMA raw_data; (broze)
+CREATE SCHEMA bronzelayer;
 GO
-CREATE SCHEMA data_cleaning; (silver)
+CREATE SCHEMA silverlayer;
 GO
-CREATE SCHEMA clean_data; (gold)
------------------------------------------------------------------------------------------------
-City_hour bronze table
------------------------------------------------------------------------------------------------
-IF OBJECT_ID('raw_data.city_hour','U') IS NOT NULL
-DROP TABLE raw_data.city_hour;
+CREATE SCHEMA goldlayer;
 
-CREATE TABLE raw_data.city_hour
+
+IF OBJECT_ID ('bronzelayer.station_hour','U') IS NOT NULL
+DROP TABLE bronzelayer.station_hour
+
+CREATE TABLE bronzelayer.station_hour
 (
-City Varchar(50),
-Date_time Varchar(50),
+StationId varchar(50),
+Datetime_ varchar(20),
 PM2_5 decimal(10,2),
-PM10 decimal(10,2),
+PM_10 decimal(10,2),
 NO_ decimal(10,2),
 NO2 decimal(10,2),
-NOx decimal(10,2),
-NH3 decimal(10,2),
-CO decimal(10,2),
-SO2 decimal(10,2),
-O3 decimal(10,2),
-Benzene decimal(10,2),
-Toluene decimal(10,2), 
-Xylene decimal(10,2),
-AQI int,
-AQI_Bucket varchar(50)
-);
------------------------------------------------------------------------------------------------
-City_day bronze table
------------------------------------------------------------------------------------------------
-IF OBJECT_ID('raw_data.city_day','U') IS NOT NULL
-DROP TABLE raw_data.city_day;
-
-CREATE TABLE raw_data.city_day
-(
-City Varchar(50),
-Date_ Varchar(50),
-PM2_5 decimal(10,2),
-PM10 decimal(10,2),
-NO_ decimal(10,2),
-NO2 decimal(10,2),
-NOx decimal(10,2),
-NH3 decimal(10,2),
-CO decimal(10,2),
-SO2 decimal(10,2),
-O3 decimal(10,2),
-Benzene decimal(10,2),
-Toluene decimal(10,2), 
-Xylene decimal(10,2),
-AQI int,
-AQI_Bucket varchar(50)
-);
------------------------------------------------------------------------------------------------
-Station_hour bronze table
------------------------------------------------------------------------------------------------
-IF OBJECT_ID('raw_data.station_hour','U') IS NOT NULL
-DROP TABLE raw_data.station_hour;
-
-CREATE TABLE raw_data.station_hour(
-StationID varchar(50),
-Datetime_ Varchar(50),
-PM2_5 decimal(10,2),
-PM10 decimal(10,2),
-NO_ decimal(10,2),
-NO2 decimal(10,2),
-NOx decimal(10,2),
+NOX decimal(10,2),
 NH3 decimal(10,2),
 CO decimal(10,2),
 SO2 decimal(10,2),
@@ -83,20 +33,19 @@ Xylene decimal(10,2),
 AQI int,
 AQI_Bucket varchar(50)
 );
------------------------------------------------------------------------------------------------
-Station_day bronze table
------------------------------------------------------------------------------------------------
-IF OBJECT_ID('raw_data.station_day','U') IS NOT NULL
-DROP TABLE raw_data.station_day;
 
-CREATE TABLE raw_data.station_day(
-StationID varchar(50),
-Date_ Varchar(50),
+IF OBJECT_ID ('bronzelayer.station_day','U') IS NOT NULL
+DROP TABLE bronzelayer.station_day
+
+CREATE TABLE bronzelayer.station_day
+(
+StationId varchar(50),
+Date_ varchar(20),
 PM2_5 decimal(10,2),
-PM10 decimal(10,2),
+PM_10 decimal(10,2),
 NO_ decimal(10,2),
 NO2 decimal(10,2),
-NOx decimal(10,2),
+NOX decimal(10,2),
 NH3 decimal(10,2),
 CO decimal(10,2),
 SO2 decimal(10,2),
@@ -107,16 +56,51 @@ Xylene decimal(10,2),
 AQI int,
 AQI_Bucket varchar(50)
 );
------------------------------------------------------------------------------------------------
-Station bronze table
------------------------------------------------------------------------------------------------
-IF OBJECT_ID('raw_data.station','U') IS NOT NULL
-DROP TABLE raw_data.station;
+IF OBJECT_ID ('bronzelayer.city_day','U') IS NOT NULL
+DROP TABLE bronzelayer.city_day
 
-CREATE TABLE raw_data.station(
-StationID varchar(50),
-StationName varchar(100),
+CREATE TABLE bronzelayer.city_day(
 City varchar(50),
-State_ varchar(50),
-Status_ varchar(50)
+Date_ varchar(50),
+PM2_5 decimal(10,2),
+PM10 decimal(10,2),
+NO_ decimal(10,2),
+NO2 decimal(10,2),
+NOx decimal(10,2),
+NH3 decimal(10,2),
+CO decimal(10,2),
+SO2 decimal(10,2),
+O3 decimal(10,2),Benzene decimal(10,2),Toluene decimal(10,2),Xylene decimal(10,2),
+AQI int,
+AQI_Bucket varchar(50)
+);
+IF OBJECT_ID ('bronzelayer.city_hour','U') IS NOT NULL
+DROP TABLE bronzelayer.city_hour
+
+CREATE TABLE bronzelayer.city_hour(
+City varchar(50),
+Date_time varchar(50),
+PM2_5 decimal(10,2),
+PM10 decimal(10,2),
+NO_ decimal(10,2),
+NO2 decimal(10,2),
+NOx decimal(10,2),
+NH3 decimal(10,2),
+CO decimal(10,2),
+SO2 decimal(10,2),
+O3 decimal(10,2),Benzene decimal(10,2),Toluene decimal(10,2),Xylene decimal(10,2),
+AQI int,
+AQI_Bucket varchar(50)
+);
+
+IF OBJECT_ID ('bronzelayer.station_detail','U') IS NOT NULL
+DROP TABLE bronzelayer.station_detail
+
+CREATE TABLE bronzelayer.station_detail
+(
+StationId varchar (50),
+StationName varchar (50),
+City varchar (50),
+State_ varchar (50),
+Status_ varchar (50)
 );
