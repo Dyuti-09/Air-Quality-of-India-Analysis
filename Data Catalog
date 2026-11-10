@@ -1,37 +1,52 @@
-AIR QUALITY DATA CATALOG(clean_data Schema)
+AIR QUALITY DATA CATALOG(Goldlayer Schema)
 
 OVERVIEW:
 This catalog explains the curated analytical views used for reporting and dashboarding. 
 These views abstract the underlying cleaned storage tables, providing standardized column names, consistent data types, and clear business metrics for air quality tracking across cities and stations.
 
 **Note:** The repository contains SQL scripts for database creation, data loading, transformation and analytical views. The source CSV files are excluded from the repository.
+
+**Refer to Gold layer file for the SQL script
+
 DIMENSION TABLE:
 
-clean_data.dim_station
+goldlayer.dim_station
 
 Description: Master dimension table containing descriptive attributes for each air quality monitoring station.
 Grain: One row per unique monitoring station(station_id)
-Source Lineage: data_cleaning.station
+Source Lineage: silverlayer.station_details
 
 |------------------|---------------------------|---------------------------------------------------------------------------|
 |  COLUMN NAME     |    DATA TYPE (logical)    |  DESCRIPTION                                                              |
 | -----------------|---------------------------|-------------------------------------------------------------------------- |
 |   station_id     |    Varchar/Identifier     |  Unique alphanumeric identifier for the monitoring station (Primary Key)  |
 |------------------|---------------------------|---------------------------------------------------------------------------|
-|   station_name   |    Varchar/Text           |  Cleaned, human-readable name of the monitoring station.                  |
+|  station_name    |    Varchar/Text           |  Cleaned, human-readable name of the monitoring station.                  |
 |------------------|---------------------------|---------------------------------------------------------------------------|
+|  state           |    Varchar/Text           |  The state where the monitoring station is located.                       |
+|------------------|---------------------------|---------------------------------------------------------------------------|
+
+goldlayer.dim_city
+
+Description: Dimension table containing unique city and its geological location
+Grain: One row per unique monitoring city(city)
+Source Lineage: silverlayer.station_details
+
+|------------------|---------------------------|---------------------------------------------------------------------------|
+|  COLUMN NAME     |    DATA TYPE (logical)    |  DESCRIPTION                                                              |
+| -----------------|---------------------------|-------------------------------------------------------------------------- |
 |  city            |    Varchar/Text           |  The city where the station is physically located.                        |
 |------------------|---------------------------|---------------------------------------------------------------------------|
-|  station_name    |    Varchar/Text           |  The state where the monitoring station is located.                       |
+|  state           |    Varchar/Text           |  The state where the monitoring station is located.                       |
 |------------------|---------------------------|---------------------------------------------------------------------------|
 
 FACT TABLES:
 A. Station-level Fact Views
-clean_data.fact_station_day
+goldlayer.fact_station
 
-Description: Daily aggregated air quality and pollutant measurements captured at individual monitoring stations.
-Grain: One row per station per calendar day.
-Source Lineage: data_cleaning.station_day
+Description: Daily and hourly aggregated air quality and pollutant measurements captured at individual monitoring stations.
+Grain: One row per station hourly record of everyday.
+Source Lineage: silverlayer.station_day and silverlayer.station_hour (joined as per common station_id and dates)
 
 clean_data.fact_station_hour
 
@@ -44,7 +59,9 @@ Source Lineage: data_cleaning.station_hour
 | -----------------|---------------------------|-------------------------------------------------------------------------- |
 |  station_id      |  Foreign Key              |  Reference: dim_station.station_id                                        |
 |------------------|---------------------------|---------------------------------------------------------------------------|
-| record_date/time |  Date / DateTime          |  Timestamp or date of the recorded observation.                           |
+| record_date      |  Date / DateTime          |  Date of the recorded observation.                                        |
+|------------------|---------------------------|---------------------------------------------------------------------------|
+| record_time      |  Time                     |  Timestamp of the recorded observation.                                   |
 |------------------|---------------------------|---------------------------------------------------------------------------|
 |  pm2_5           | Pollutant Metric(mug/m^3) |  Particulate Matter 2.5 concentration level.                              |
 |------------------|---------------------------|---------------------------------------------------------------------------|
@@ -73,19 +90,12 @@ Source Lineage: data_cleaning.station_hour
 |------------------|---------------------------|---------------------------------------------------------------------------|
 
 B. City-Level Fact Views
-clean_data.fact_city_day
-Description: Daily aggregated air quality and pollutant metrics summarized at the city level.
+goldlayer.fact_city
+Description: Daily and hourly air quality and pollutant metrics summarized at the city level.
 
-Grain: One row per city per calendar day.
+Grain: One row per city per calendar day and per hour.
 
-Source Lineage: data_cleaning.city_day
-
-clean_data.fact_city_hour
-Description: Hourly air quality and pollutant metrics summarized at the city level.
-
-Grain: One row per city per hour.
-
-Source Lineage: data_cleaning.city_hour
+Source Lineage: silverlayer.city_day and silverlayer.city_hour (joined as per common station_id and dates)
 
 Common Column Definitions for City Fact Views:
 
@@ -94,7 +104,9 @@ Common Column Definitions for City Fact Views:
 | -----------------|---------------------------|-------------------------------------------------------------------------- |
 |   city_name      |  Dimension Attribute      |  Name of the city associated with the aggregated metrics.                 |
 |------------------|---------------------------|---------------------------------------------------------------------------|
-| record_date/time |  Date / DateTime          |  Timestamp or date of the recorded observation.                           |
+| record_date      |  Date / DateTime          |  Date of the recorded observation.                                        |
+|------------------|---------------------------|---------------------------------------------------------------------------|
+| record_time      |  Time                     |  Timestamp of the recorded observation.                                   |
 |------------------|---------------------------|---------------------------------------------------------------------------|
 |  pm2_5           | Pollutant Metric(mug/m^3) |  Particulate Matter 2.5 concentration level.                              |
 |------------------|---------------------------|---------------------------------------------------------------------------|
@@ -102,19 +114,19 @@ Common Column Definitions for City Fact Views:
 |------------------|---------------------------|---------------------------------------------------------------------------|
 |  no_2            | Pollutant Metric(mug/m^3) |  Nitrogen Dioxide concentration level.                                    |
 |------------------|---------------------------|---------------------------------------------------------------------------|
-|  nh_3            |Pollutant Metric(mug/m^3)  |  Ammonia concentration level.                                             |
+|  nh_3            | Pollutant Metric(mug/m^3) |  Ammonia concentration level.                                             |
 |------------------|---------------------------|---------------------------------------------------------------------------|
 |  co              | Pollutant Metric(mug/m^3) |  Carbon Monoxide concentration level.                                     |
 |------------------|---------------------------|---------------------------------------------------------------------------|
-|  so_2            |Pollutant Metric(mug/m^3)  |  Sulfur Dioxide concentration level.                                      |
+|  so_2            | Pollutant Metric(mug/m^3) |  Sulfur Dioxide concentration level.                                      |
 |------------------|---------------------------|---------------------------------------------------------------------------|
 |  o_3             | Pollutant Metric(mug/m^3) |  Ozone concentration level.                                               |
 |------------------|---------------------------|---------------------------------------------------------------------------|
-|  benzene         |Pollutant Metric(mug/m^3)  |  Benzene concentration level.                                             |
+|  benzene         | Pollutant Metric(mug/m^3) |  Benzene concentration level.                                             |
 |------------------|---------------------------|---------------------------------------------------------------------------|
 |  toluene         | Pollutant Metric(mug/m^3) |  Toluene concentration level.                                             |
 |------------------|---------------------------|---------------------------------------------------------------------------|
-|  xylene          |Pollutant Metric(mug/m^3)  |  Xylene concentration level.                                              |
+|  xylene          | Pollutant Metric(mug/m^3) |  Xylene concentration level.                                              |
 |------------------|---------------------------|---------------------------------------------------------------------------|
 |  aqi             | Air Quality Index         |  Calculated overall Air Quality Index value.                              |
 |------------------|---------------------------|---------------------------------------------------------------------------|
