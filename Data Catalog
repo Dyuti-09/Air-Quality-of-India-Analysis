@@ -4,6 +4,7 @@ OVERVIEW:
 This catalog explains the curated analytical views used for reporting and dashboarding. 
 These views abstract the underlying cleaned storage tables, providing standardized column names, consistent data types, and clear business metrics for air quality tracking across cities and stations.
 
+**Note:** The repository contains SQL scripts for database creation, data loading, transformation and analytical views. The source CSV files are excluded from the repository.
 DIMENSION TABLE:
 
 clean_data.dim_station
