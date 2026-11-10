@@ -1,17 +1,15 @@
 # India Air Quality Data Warehouse 
 # Project Overview
 This project focuses on designing and developing a SQL Server-based data warehouse to organize and prepare air quality index (AQI) of India for analytical reporting.
-
 The warehouse follows a Madellian Architecture consisting of three layers:
-1. # Bronze Layer:
+1. Bronze Layer:
    Stores raw air quality datasets at city and station level with daily and hourly records.
-2. # Silver Layer:
+2. Silver Layer:
     Performs data cleaning , data standardization, data type conversions, and data quality checks.
-3. # Gold Layer:
+3. Gold Layer:
    Organizes transformed datasets into fact and dimension tables that can be used to build dashboard and generate business insights.
    
 <img width="762" height="452" alt="image" src="https://github.com/user-attachments/assets/4832a496-8dad-4d51-8fc8-f2789d29d5e0" />
-
 
 # Technology Stack
 1. Microsoft SQL Server
