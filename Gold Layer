@@ -48,7 +48,30 @@
           ,ch.toluene
           ,ch.xylene
           ,ch.aqi
-          ,ch.aqi_bucket
+          ,ch.aqi_bucket,
+CASE 
+            WHEN
+            CH.aqi >= 0 AND CH.aqi <=100 THEN '0-100'
+            WHEN
+            CH.aqi >= 101 AND CH.aqi <=200 THEN '101-200'
+            WHEN
+            CH.aqi >= 201 AND CH.aqi <=300 THEN '201-300'
+            WHEN
+            CH.aqi >= 301 AND CH.aqi <=400 THEN '301-400'
+            WHEN
+            CH.aqi >= 401 AND CH.aqi <=500 THEN '401-500'
+            WHEN
+            CH.aqi >= 501 AND CH.aqi <=600 THEN '501-600'
+            WHEN
+            CH.aqi >= 601 AND CH.aqi <=700 THEN '601-700'
+            WHEN
+            CH.aqi >= 701 AND CH.aqi <=800 THEN '701-800'
+            WHEN
+            CH.aqi >= 801 AND CH.aqi <=900 THEN '801-900'
+            WHEN
+            CH.aqi >= 901 AND CH.aqi <=1000 THEN '901-1000'
+            ELSE 'OUT OF RANGE'
+            END AS 'AQI RANGE'
       FROM silverlayer.city_hour ch      -- Combined the city_day and city_hour table into one table containing common date and city
       left join silverlayer.city_day cd
       on ch.city = cd.city
