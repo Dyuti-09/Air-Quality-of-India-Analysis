@@ -20,7 +20,30 @@
     sh.toluene,
     sh.xylene,
     sh.aqi,
-    sh.aqi_bucket
+    sh.aqi_bucket,
+CASE 
+        WHEN
+        sh.aqi >= 0 AND sh.aqi <=100 THEN '0-100'
+        WHEN
+        sh.aqi >= 101 AND sh.aqi <=200 THEN '101-200'
+        WHEN
+        sh.aqi >= 201 AND sh.aqi <=300 THEN '201-300'
+        WHEN
+        sh.aqi >= 301 AND sh.aqi <=400 THEN '301-400'
+        WHEN
+        sh.aqi >= 401 AND sh.aqi <=500 THEN '401-500'
+        WHEN
+        sh.aqi >= 501 AND sh.aqi <=600 THEN '501-600'
+        WHEN
+        sh.aqi >= 601 AND sh.aqi <=700 THEN '601-700'
+        WHEN
+        sh.aqi >= 701 AND sh.aqi <=800 THEN '701-800'
+        WHEN
+        sh.aqi >= 801 AND sh.aqi <=900 THEN '801-900'
+        WHEN
+        sh.aqi >= 901 AND sh.aqi <=1000 THEN '901-1000'
+        ELSE 'OUT OF RANGE'
+        END AS 'AQI RANGE'
     FROM silverlayer.station_hour sh    -- Combined the station_day and station_hour table into one table containing common date and station_id
     LEFT JOIN silverlayer.station_day sd
     ON
