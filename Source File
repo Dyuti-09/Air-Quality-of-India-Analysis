@@ -1,3 +1,11 @@
+Dataset Information
+
+The source air quality datasets are maintained locally and are not included in this repository.
+
+To execute the Bronze Layer loading procedure:
+
+Obtain the original datasets from the specified data source: https://www.kaggle.com/code/pratik1120/air-quality-data-in-india-2015-2020
+
 Files are available in CSV format:
 
 PRIMARY FOLDER:
@@ -7,4 +15,3 @@ SUB FOLDERS:     FILES:
 City             city_day ; city_hour
 Station          station_day ; station_hour ; station
 
-Source : https://www.kaggle.com/code/pratik1120/air-quality-data-in-india-2015-2020
