@@ -42,10 +42,3 @@ https://app.notion.com/p/Air-Quality-of-India-Analysis-403e744e57ea8060b565f1022
 Current stage: Gold Layer development completed; preparing for analytical exploration and visualisation.
 
 
-Dataset Information
-
-The source air quality datasets are maintained locally and are not included in this repository.
-
-To execute the Bronze Layer loading procedure:
-
-Obtain the original datasets from the specified data source: https://www.kaggle.com/code/pratik1120/air-quality-data-in-india-2015-2020
