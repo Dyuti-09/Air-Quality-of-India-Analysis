@@ -26,6 +26,12 @@ Station Daily Air Quality
 City Hourly Air Quality
 City Daily Air Quality
 
+<img width="892" height="546" alt="ChatGPT Image Nov 10, 2026, 06_16_41 PM" src="https://github.com/user-attachments/assets/41d19cae-d044-460b-8f0d-8476908cea03" />
+
+<img width="1107" height="322" alt="ChatGPT Image Nov 10, 2026, 06_17_38 PM" src="https://github.com/user-attachments/assets/d1f9367a-cca8-4f77-9a1f-5ab5775ed37e" />
+
+
+
 <img width="722" height="461" alt="image" src="https://github.com/user-attachments/assets/6f5a14d8-d455-4940-9dff-96cdcdae9b90" />
 It also incorporates station and geographical attributes to support location-based analysis.
 
