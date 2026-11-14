@@ -114,8 +114,19 @@ CASE
 
       select * from silverlayer.dim_station; -- extracted unique station_id names to form a seperate dimension table station. This would simplify the data modelling process. 
   
-   
+      CREATE VIEW goldlayer.dim_calender AS
+
+      select 
+      Distinct(record_date) AS dates,
+      DATENAME(MONTH,record_date) as months,
+      DATENAME(WEEKDAY, record_date) AS days_of_week,
+      DATENAME(quarter,(record_date)) as quarters
+      from goldlayer.fact_cities
+      order by record_date asc ; 
+
+
   select * from goldlayer.fact_cities;
   select * from goldlayer.fact_stations;
   select * from goldlayer.dim_city;
   select * from goldlayer.dim_station;
+  select * from goldlayer.dim_calender;
