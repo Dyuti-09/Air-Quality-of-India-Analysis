@@ -29,6 +29,10 @@ City Daily Air Quality
 <img width="722" height="461" alt="image" src="https://github.com/user-attachments/assets/6f5a14d8-d455-4940-9dff-96cdcdae9b90" />
 It also incorporates station and geographical attributes to support location-based analysis.
 
+# Data Modelling
+
+<img width="786" height="497" alt="image" src="https://github.com/user-attachments/assets/2f468cb9-e4ab-4a74-90a9-5a1e0284b434" />
+
 # Phases of Project :
 <img width="687" height="486" alt="image" src="https://github.com/user-attachments/assets/72a81b9b-9159-4c9c-a734-4390b9204de5" />
 
