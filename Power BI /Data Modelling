@@ -1,0 +1,10 @@
+Fact Tables:
+
+fact_cities : daily and hourly records of all pollutants as per cities
+fact_stations : daily and hourly records of all pollutants as per cities
+
+Dimension Tables: 
+
+dim_city : city( primary key)
+dim_stations : station_id (primary key)
+
