@@ -67,11 +67,32 @@ fact_stations : daily and hourly records of all pollutants as per cities
 
 Dimension Tables: 
 
+dim_stations : station_id (primary key)
+
+|------------------|---------------------------|---------------------------------------------------------------------------|
+|  COLUMN NAME     |    DATA TYPE (logical)    |  DESCRIPTION                                                              |
+| -----------------|---------------------------|-------------------------------------------------------------------------- |
+|   station_id     |    Varchar/Identifier     |  Unique alphanumeric identifier for the monitoring station (Primary Key)  |
+|------------------|---------------------------|---------------------------------------------------------------------------|
+|  station_name    |    Varchar/Text           |  Cleaned, human-readable name of the monitoring station.                  |
+|------------------|---------------------------|---------------------------------------------------------------------------|
+|  state           |    Varchar/Text           |  The state where the monitoring station is located.                       |
+|------------------|---------------------------|---------------------------------------------------------------------------|
+
 dim_city : city( primary key)
 
+Description: Dimension table containing unique city and its geological location
+Grain: One row per unique monitoring city(city)
+
+|------------------|---------------------------|---------------------------------------------------------------------------|
+|  COLUMN NAME     |    DATA TYPE (logical)    |  DESCRIPTION                                                              |
+| -----------------|---------------------------|-------------------------------------------------------------------------- |
+|  city            |    Varchar/Text           |  The city where the station is physically located.                        |
+|------------------|---------------------------|---------------------------------------------------------------------------|
+|  state           |    Varchar/Text           |  The state where the monitoring station is located.                       |
+|------------------|---------------------------|---------------------------------------------------------------------------|
 
 
-dim_stations : station_id (primary key)
 
 
 
