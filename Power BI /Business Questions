@@ -1,0 +1,25 @@
+Regulatory Compliance & Threshold Breaches:
+
+Which cities, stations, or sites spend the highest number of days/hours in Poor, Very Poor, or Severe AQI buckets, and how frequently do individual pollutants breach safe thresholds?
+Can we set up threshold alerts or drill-through views so operations teams can spot multi-day deterioration trends before they turn into regulatory notices or audit findings?
+Where are monitoring gaps, missing values, or sensor dropouts skewing daily/hourly averages
+How do we ensure compliance metrics aren't misread when fewer than three pollutants or no particulate readings are present?
+
+Root-Cause & Pollutant Attribution:
+
+Which pollutant is the primary driver of high AQI by city and season (e.g., winter inversion/stubble burning vs. summer/monsoon patterns)?
+When AQI spikes, is it predominantly driven by fine/coarse particulates or localized gaseous emissions—and how consistent is that pattern across monitoring stations within the same city?
+In hourly data, do peaks align with rush hours, shift changes, industrial activity, or meteorological shifts?
+
+Multi-Site Prioritization & Resource Allocation:
+
+If we have limited budget or intervention bandwidth across locations, how do cities/stations rank on both average burden and peak severity?
+How do city-wide trends compare against station-level readings—are there specific micro-hotspots dragging down a city's performance, or is pollution broad-based?
+If an action plan, dust-control measure, or operational change is rolled out, how cleanly can the dashboard show before-and-after shifts while accounting for seasonality?
+
+Executive Reporting, ESG & Stakeholder Readiness:
+
+How can we structure the report so an executive sees high-level KPIs and trends at a glance, while an environmental engineer or compliance lead can filter down to station, date, and pollutant sub-index detail?
+Are AQI buckets, sub-index calculations, and missing-data rules documented and locked in the semantic layer so different teams don't report conflicting numbers?
+How easily can leadership compare Year-over-Year (YoY), Month-over-Month (MoM), or baseline-vs.-current performance without getting tripped up by uneven date coverage across sources
+(such as 2015–present city data vs. 2017–present station data)?
