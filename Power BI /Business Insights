@@ -1,0 +1,46 @@
+Question: Which cities, stations, or sites spend the highest number of days/hours in Poor, Very Poor, or Severe AQI buckets?
+
+DAX :  
+Hours_Poor_to_Severe_City = 
+
+ CALCULATE(
+    COUNTROWS('goldlayer fact_cities'),
+    'goldlayer fact_cities'[AQI Bucket] IN {"Poor","Very Poor","Severe"}
+)
+
+Top_3_Poor_to_Severe_cities = 
+    VAR AQI_rank = IF(
+        NOT ISBLANK([Hours_Poor_to_Severe_City]),
+        CALCULATE(
+            RANKX(ALLSELECTED('goldlayer fact_cities'[city]),
+            [Hours_Poor_to_Severe_City],,DESC,Dense)
+        )
+    )
+    
+RETURN
+IF(
+    AQI_rank <= 3, [Hours_Poor_to_Severe_City],BLANK())
+
+
+Hours_Poor_to_Severe_Station = 
+CALCULATE(
+    COUNTROWS('goldlayer fact_stations'),
+    'goldlayer fact_cities'[AQI Bucket] IN {"Poor","Very Poor","Severe"}
+)
+
+
+Top_3_Stations_Poor_to_Severe_hour = 
+VAR Aqi_station_rank = 
+IF(
+  NOT ISBLANK([Hours_Poor_to_Severe_Station]),
+CALCULATE(
+    RANKX(
+        ALLSELECTED('goldlayer fact_stations'),
+        [Hours_Poor_to_Severe_Station],,
+        DESC,Dense
+    )
+),BLANK())
+
+RETURN
+IF(
+Aqi_station_rank <=3, [Hours_Poor_to_Severe_Station],BLANK())
