@@ -1,6 +1,12 @@
-Question: Which cities, stations, or sites spend the highest number of days/hours in Poor, Very Poor, or Severe AQI buckets?
+Problem: Which cities, stations, or sites spend the highest number of days/hours in Poor, Very Poor, or Severe AQI buckets?
+----------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------
+I created Hours_Poor_to_Severe KPIs for cities and monitoring stations to count the recorded hours when the AQI was classified as Poor, Very Poor, or Severe.
+I then used the Top_3_Poor_to_Severe measures to identify and display the three cities and stations with the highest number of these unhealthy hours.
 
 DAX :  
+----------------------------------------------------------------------------------------------------------
 Hours_Poor_to_Severe_City = 
 
  CALCULATE(
