@@ -50,3 +50,80 @@ CALCULATE(
 RETURN
 IF(
 Aqi_station_rank <=3, [Hours_Poor_to_Severe_Station],BLANK())
+
+
+Problem : How frequently do individual pollutants breach safe thresholds?
+
+Solution:
+
+To determine how frequently pollutant levels exceeded safe limits, I calculated the hourly count of instances in which each pollutant surpassed its defined moderate threshold.
+I then added the pollutant field as a slicer, enabling users to analyze exceedance frequency by city and monitoring station.
+Finally, I created a dynamic measure that displays the threshold-breach frequency for the selected pollutant.
+
+PM2.5_Severe breach frequency_City = 
+CALCULATE(
+    COUNTROWS('goldlayer fact_cities'),
+    'goldlayer fact_cities'[pm2.5] > 90)
+======================================================================
+PM10_Severe breach frequency_City = 
+CALCULATE(
+    COUNTROWS('goldlayer fact_cities'),
+    'goldlayer fact_cities'[pm10] > 250)
+======================================================================
+NO2_Severe breach frequency_Cities = 
+CALCULATE(
+    COUNTROWS('goldlayer fact_cities'),
+'goldlayer fact_cities'[no2] > 180)
+======================================================================
+
+SO2_Severe breach frequency_Cities = 
+CALCULATE(
+    COUNTROWS('goldlayer fact_cities'),
+'goldlayer fact_cities'[so2] > 380)
+======================================================================
+NH3_Severe breach frequency_Cities = 
+CALCULATE(
+    COUNTROWS('goldlayer fact_cities'),
+'goldlayer fact_cities'[nh3] > 800)
+======================================================================
+
+CO_Sever breach frequency_City = 
+CALCULATE(
+    COUNTROWS('goldlayer fact_cities'),
+'goldlayer fact_cities'[co] > 10)
+======================================================================
+
+O3_Severe breach frequency_Cities = 
+CALCULATE(
+    COUNTROWS('goldlayer fact_cities'),
+'goldlayer fact_cities'[o3] > 168)
+===========================================================================
+
+****Did the same calculation for monitoring  Stations******
+
+Value_City = 
+SWITCH(
+    [Selected Pollutant],
+    "pm2.5",[PM2.5_Severe breach frequency_City],
+    "pm10",[PM10_Severe breach frequency_City],
+    "no2",[NO2_Severe breach frequency_Cities],
+    "nh3",[NH3_Severe breach frequency_Cities],
+    "so2",[SO2_Severe breach frequency_Cities],
+    "o3",[O3_Severe breach frequency_Cities],
+    "co",[CO_Sever breach frequency_City]
+)
+===========================================================================
+Value_Station = 
+SWITCH(
+    [Selected Pollutant],
+    "pm2.5",[PM2.5 Severe breach frequency],
+    "pm10",[PM10 Severe breach frequency],
+    "no2",[NO2 Severe breach frequency],
+    "nh3",[NH3 Severe breach frequency],
+    "so2",[SO2 Severe breach frequency],
+    "o3",[O3 Severe breach frequency],
+    "co",[CO Sever breach frequency]
+)
+
+
+
